@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1457308910/AnnotationProcessingTest.iml" filepath="$PROJECT_DIR$/.idea/modules/-1457308910/AnnotationProcessingTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1457308910/AnnotationProcessingTest_main.iml" filepath="$PROJECT_DIR$/.idea/modules/-1457308910/AnnotationProcessingTest_main.iml" group="AnnotationProcessingTest" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1457308910/AnnotationProcessingTest_test.iml" filepath="$PROJECT_DIR$/.idea/modules/-1457308910/AnnotationProcessingTest_test.iml" group="AnnotationProcessingTest" />
+      <module fileurl="file://$PROJECT_DIR$/Consumer.iml" filepath="$PROJECT_DIR$/Consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Consumer_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Consumer_main.iml" group="Consumer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Consumer_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Consumer_test.iml" group="Consumer" />
+    </modules>
+  </component>
+</project>

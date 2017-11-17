@@ -16,7 +16,10 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.immutables:value:2.5.6:annotations'
+    compile 'de.eso:AnnotationProcessingTest:1.0-SNAPSHOT'
+    apt 'de.eso:AnnotationProcessingTest:1.0-SNAPSHOT'
+
+    compile 'org.immutables:value:2.5.6:annotations'
     apt 'org.immutables:value:2.5.6'
 
     implementation 'com.squareup:javapoet:1.9.0'
