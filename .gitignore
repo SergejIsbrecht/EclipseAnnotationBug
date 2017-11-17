@@ -12,8 +12,6 @@ gradle-app.setting
 # Cache of project
 .gradletasknamecache
 
-.apt_generated
-
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 ### NetBeans template
@@ -55,10 +53,6 @@ cmake-build-debug/
 *.iws
 
 ## Plugin-specific files:
-
-.classpath
-.project
-*.iml
 
 # IntelliJ
 out/
