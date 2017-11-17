@@ -1,9 +1,12 @@
+import annotation.Factory;
+import annotation.ImmutableX;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import org.immutables.value.Value;
-
+import java.io.IOException;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
@@ -12,81 +15,77 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class ImmutableGenerator extends AbstractProcessor {
-	private ProcessingEnvironment env;
+  private ProcessingEnvironment env;
 
-	private List<? extends Element> elementsToProcess = new ArrayList<>();
+  @Override
+  public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+    Set<? extends Element> elementsAnnotatedWithFactory =
+        roundEnv.getElementsAnnotatedWith(Factory.class);
 
-	private int processingInt = 0;
+    elementsAnnotatedWithFactory.forEach(t -> System.out.println(t.getSimpleName().toString()));
 
-	@Override
-	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-		Set<? extends Element> elementsAnnotatedWithFactory = roundEnv.getElementsAnnotatedWith(Factory.class);
+    if (!roundEnv.processingOver()) {
+      elementsAnnotatedWithFactory.forEach(
+          e -> {
+            String name = e.getSimpleName().toString();
 
-		annotations.forEach(t -> System.out.println(t.toString()));
-		
-		if(elementsToProcess.size() == 0) {
-			elementsToProcess = elementsAnnotatedWithFactory.stream().collect(Collectors.toList());	
-		}
-		
-		if(!roundEnv.processingOver()) {
-			if (processingInt < elementsToProcess.size()) {
-				Element element = elementsToProcess.get(processingInt);
-				
-				String name = element.getSimpleName().toString();
+            System.out.println("processe : " + name);
 
-				String leName = name + "Factory";
-				TypeSpec create = TypeSpec.interfaceBuilder(leName).addModifiers(Modifier.PUBLIC)
-						.addAnnotation(Value.Immutable.class)
-						.addMethod(
-									MethodSpec.methodBuilder("factory")//
-										.addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-										.returns(ClassName.get("de.eso.gen", "Immutable" + leName))
-										.build()
-						)
-						.addMethod(
-								MethodSpec.methodBuilder("create")
-								.addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-								.returns(String.class)
-								.build()
-						)
-						.build();
-				JavaFile build = JavaFile.builder("de.eso.gen", create).build();
+            String leName = name + "Factory";
+            System.out.println("leName : " + leName);
 
-				try {
-					build.writeTo(env.getFiler());
-				} catch (IOException e1) {
-					throw new RuntimeException(e1);
-				}
+            ClassName className = ClassName.get("de.eso.gen", "Immutable" + leName);
+            MethodSpec factoryMethod =
+                MethodSpec.methodBuilder("factory") //
+                    .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                    .returns(className)
+                    .build();
 
-				processingInt++;
+            System.out.println(className.toString());
+            System.out.println(factoryMethod.toString());
 
-				return false;
-			} else {
-				return true;
-			}
-		}
+            MethodSpec createMethod =
+                MethodSpec.methodBuilder("create")
+                    .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                    .returns(String.class)
+                    .build();
+            System.out.println(createMethod.toString());
 
-		return true;
-	}
+            TypeSpec type =
+                TypeSpec.interfaceBuilder(ClassName.get("de.eso.gen", leName))
+                    .addModifiers(Modifier.PUBLIC)
+                    .addMethod(factoryMethod)
+                    .addMethod(createMethod)
+                    .addAnnotation(ImmutableX.class)
+                    .build();
 
-	@Override
-	public Set<String> getSupportedAnnotationTypes() {
-		Set<String> annotataions = new LinkedHashSet<String>();
-		annotataions.add(Factory.class.getCanonicalName());
-		return annotataions;
-	}
+            JavaFile build = JavaFile.builder("de.eso.gen", type).build();
 
-	@Override
-	public synchronized void init(ProcessingEnvironment env) {
-		this.env = env;
-	}
+            System.out.println(build.toString());
+
+            try {
+              build.writeTo(env.getFiler());
+            } catch (IOException e1) {
+              throw new RuntimeException(e1);
+            }
+          });
+    }
+
+    return false;
+  }
+
+  @Override
+  public Set<String> getSupportedAnnotationTypes() {
+    Set<String> annotataions = new LinkedHashSet<>();
+    annotataions.add(Factory.class.getCanonicalName());
+    return annotataions;
+  }
+
+  @Override
+  public synchronized void init(ProcessingEnvironment env) {
+    this.env = env;
+  }
 }
