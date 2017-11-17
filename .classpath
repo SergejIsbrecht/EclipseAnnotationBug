@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>
+	<classpathentry kind="lib" path="C:/Users/seis7397/.gradle/caches/modules-2/files-2.1/org.immutables/value/2.5.6/b6a247a2b31a87f0d20d854308e48708b203a0e4/value-2.5.6-annotations.jar" sourcepath="C:/Users/seis7397/.gradle/caches/modules-2/files-2.1/org.immutables/value/2.5.6/2b7b4d8da9dba792f9e9afc81febd63e4cbc500/value-2.5.6-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/seis7397/.gradle/caches/modules-2/files-2.1/com.squareup/javapoet/1.9.0/ecc5cf9c221d55481163e773b24336db149e51/javapoet-1.9.0.jar" sourcepath="C:/Users/seis7397/.gradle/caches/modules-2/files-2.1/com.squareup/javapoet/1.9.0/71920669c77f467b56c8e3fb594758882b81f551/javapoet-1.9.0-sources.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
